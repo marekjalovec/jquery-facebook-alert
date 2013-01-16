@@ -1,0 +1,69 @@
+<!Doctype html>
+<html>
+    <head>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="http://connect.facebook.net/en_US/all.js"></script>
+        <script type="text/javascript" src="jquery.facebook.alert.js"></script>
+        <link rel="stylesheet" href="jquery.facebook.alert.css">
+        <script type="text/javascript" src="jquery.facebook.multifriend.select.js"></script>
+        <link rel="stylesheet" href="jquery.facebook.multifriend.select.css" />
+        <title>FBAlert with Friend selector</title>
+        <style>
+            body {
+                background: #fff;
+                color: #333;
+                font: 11px verdana, arial, helvetica, sans-serif;
+            }
+            a:link, a:visited, a:hover {
+                color: #666;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="pageBody">
+            <div id="fb-root"></div>
+            <button onclick="login()" id="logged-out">Login</button>
+            <button onclick="show_friendlist()" id="logged-in" style="display: none;">Show friend selector</button>
+            <script>
+                FB.init({appId: '363963540368051', cookie: true});
+                FB.Canvas.setAutoGrow();
+
+                FB.getLoginStatus(function(response) {
+                    if (response.authResponse) {
+                        init();
+                    } else {
+                        // no user session available, someone you dont know
+                    }
+                });
+
+                function login() {
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            init();
+                        } else {
+                            alert('Login Failed!');
+                        }
+                    });
+                }
+
+                function init() {
+                    $("#logged-out").hide();
+                    $("#logged-in").show();
+                }
+
+                function show_friendlist() {
+                    fbalert($('<div id="jfmfs-container" />'), function() {
+                        alert('Selected friends: ' + $("#jfmfs-container").data('jfmfs').getSelectedIds().join(', '));
+                        fbalert_close();
+                    });
+                    $("#jfmfs-container").jfmfs({ max_selected: 3 });
+                }
+            </script>
+        </div>
+
+    </body>
+</html>
+

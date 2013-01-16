@@ -1,0 +1,74 @@
+<!Doctype html>
+<html>
+    <head>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.facebook.alert.js"></script>
+        <link rel="stylesheet" href="jquery.facebook.alert.css">
+        <title>FBAlert test</title>
+        <style>
+            body {
+                background: #fff;
+                color: #333;
+                font: 11px verdana, arial, helvetica, sans-serif;
+            }
+            a:link, a:visited, a:hover {
+                color: #666;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="pageBody">
+            <button onclick="alert_only()">Alert only</button>
+            <button onclick="custom_callback()">Alert with custom callback</button>
+            <button onclick="advanced_example()">Fully customized example</button>
+            <script>
+                function alert_only() {
+                    fbalert('Simple alert with default callback.');
+                }
+                function custom_callback() {
+                    fbalert('Alert with custom callback', function() { alert('Custom callback called.'); fbalert_close(); });
+                }
+                function advanced_example() {
+                    fbalert(
+                        // content
+                        '<strong>FBAlert</strong> test',
+                        // default callback
+                        function(button, fbalertObject) {
+                            alert('Button "' + button + '" clicked.');
+                            fbalert_close();
+                        },
+                        // custom title
+                        'Custom title',
+                        // custom buttons
+                        {
+                            'normal': {
+                                'name': 'Normal',
+                                'type': 'normal'
+                            },
+                            'primary': {
+                                'name': 'Primary',
+                                'type': 'primary'
+                            },
+                            'success': {
+                                'name': 'Success',
+                                'type': 'success'
+                            },
+                            'danger': {
+                                'name': 'Danger',
+                                'type': 'danger',
+                                callback: function(button, fbalertObject) {
+                                    alert('Another callback with button "' + button + '".');
+                                }
+                            }
+                        }
+                    );
+                }
+            </script>
+        </div>
+
+    </body>
+</html>
+
