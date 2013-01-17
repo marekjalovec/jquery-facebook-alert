@@ -1,38 +1,8 @@
 function fbalert(content, callback, title, buttons) {
-    var fbalert_show = function(info) {
-        var top = 0;
-        var left = (window.innerWidth - _alert.width()) / 2 - parseInt(_alert.css('paddingLeft'));
-        if (typeof info == 'undefined') {
-            top = document.body.scrollTop + (window.innerHeight / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'));
-        } else {
-            top = info.scrollTop - info.offsetTop + (info.clientHeight / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'))
-        }
-        _alert.css('top', top + 'px');
-        _alert.css('left', left + 'px');
-        _alert.fadeIn('fast');
-    }
     // get alert object; create if missing
     var _alert = $('#fbalert');
     if (!_alert.size()) {
         _alert = $('<div id="fbalert"><div id="fbalert-header" /><div id="fbalert-content"><div id="fbalert-body" /><div id="fbalert-footer" /></div></div>').appendTo($('body'));
-    }
-    // show alert
-    if (typeof FB == 'undefined' || _alert.hasClass('no-fb')) {
-        fbalert_show();
-    }
-    // fb environment or first occurrence
-    else {
-        // FB.Canvas.getPageInfo callback not called outside of FB iframe
-        window.fbalert_timeout = setTimeout(function() {
-            fbalert_show();
-            _alert.addClass('no-fb');
-        }, 100);
-        FB.Canvas.getPageInfo(
-            function(info) {
-                clearTimeout(window.fbalert_timeout);
-                fbalert_show(info);
-            }
-        );
     }
     // set content
     if (content instanceof $) {
@@ -86,6 +56,36 @@ function fbalert(content, callback, title, buttons) {
             button.click(function() { fbalert_close(); });
         }
         footer.append(button);
+    }
+    var fbalert_show = function(info) {
+        var top = 0;
+        var left = ($(window).innerWidth() - _alert.width()) / 2 - parseInt(_alert.css('paddingLeft'));
+        if (typeof info == 'undefined') {
+            top = document.body.scrollTop + ($(window).innerHeight() / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'));
+        } else {
+            top = info.scrollTop - info.offsetTop + (info.clientHeight / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'))
+        }
+        _alert.css('top', top + 'px');
+        _alert.css('left', left + 'px');
+        _alert.fadeIn('fast');
+    }
+    // show alert
+    if (typeof FB == 'undefined' || _alert.hasClass('no-fb')) {
+        fbalert_show();
+    }
+    // fb environment or first occurrence
+    else {
+        // FB.Canvas.getPageInfo callback not called outside of FB iframe
+        window.fbalert_timeout = setTimeout(function() {
+            fbalert_show();
+            _alert.addClass('no-fb');
+        }, 200);
+        FB.Canvas.getPageInfo(
+            function(info) {
+                clearTimeout(window.fbalert_timeout);
+                fbalert_show(info);
+            }
+        );
     }
 }
 function fbalert_close() {
