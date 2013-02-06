@@ -8,7 +8,7 @@ function fbalert(content, callback, title, buttons) {
     if (content instanceof $) {
         $('#fbalert-body').html('').css('padding', '0').append(content);
     } else {
-        $('#fbalert-body').html(content);
+        $('#fbalert-body').html(content).removeAttr('style');
     }
     // set title
     $('#fbalert-header').text(title ? title : document.title);
