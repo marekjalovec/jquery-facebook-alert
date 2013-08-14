@@ -27,7 +27,7 @@ Examples (fbalert.html):
 
 		fbalert('Simple alert with default callback.');
 
-![Simple example of FBAlert](http://against.cz/fbalert/simple.png "Simple alert")
+![Simple example of FBAlert](77.93.202.253:3700/fbalert/simple.png "Simple alert")
 
 		fbalert('Alert with custom callback', function() { alert('Custom callback called.'); fbalert_close(); });
 
@@ -65,7 +65,7 @@ Examples (fbalert.html):
 			}
 		);
 
-![Advanced example of FBAlert](http://against.cz/fbalert/advanced.png "Advanced alert")
+![Advanced example of FBAlert](77.93.202.253:3700/fbalert/advanced.png "Advanced alert")
 
 You can use this function together with the [Friend selector](https://github.com/marekjalovec/jquery-facebook-multi-friend-selector) (fbalert-fs.html).
 
@@ -75,4 +75,4 @@ You can use this function together with the [Friend selector](https://github.com
 		});
 		$("#jfmfs-container").jfmfs({ max_selected: 3 });
 
-![FBAlert with Friend selector](http://against.cz/fbalert/friend-selector.png "Friend selector")
+![FBAlert with Friend selector](77.93.202.253:3700/fbalert/friend-selector.png "Friend selector")
