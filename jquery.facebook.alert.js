@@ -1,8 +1,24 @@
-function fbalert(content, callback, title, buttons) {
+/*!
+ * jQuery Facebook Alert, Version 1.1
+ * https://github.com/marekjalovec/jquery-facebook-alert
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ function fbalert(content, callback, title, buttons) {
     // get alert object; create if missing
     var _alert = $('#fbalert');
     if (!_alert.size()) {
-        _alert = $('<div id="fbalert"><div id="fbalert-header" /><div id="fbalert-content"><div id="fbalert-body" /><div id="fbalert-footer" /></div></div>').appendTo($('body'));
+        _alert = $('<div id="fbalert"><div id="fbalert-overlay"></div><div id="fbalert-header" /><div id="fbalert-content"><div id="fbalert-body" /><div id="fbalert-footer" /></div></div>').appendTo($('body'));
     }
     // set content
     if (content instanceof $) {
@@ -61,9 +77,11 @@ function fbalert(content, callback, title, buttons) {
         var top = 0;
         var left = ($(window).innerWidth() - _alert.width()) / 2 - parseInt(_alert.css('paddingLeft'));
         if (typeof info == 'undefined') {
-            top = document.body.scrollTop + ($(window).innerHeight() / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'));
+            top = ($(window).innerHeight() / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'));
+            _alert.css('position', 'fixed');
         } else {
             top = info.scrollTop - info.offsetTop + (info.clientHeight / 2) - (_alert.height() / 2) - parseInt(_alert.css('paddingTop'))
+            _alert.css('position', 'absolute');
         }
         _alert.css('top', top + 'px');
         _alert.css('left', left + 'px');
